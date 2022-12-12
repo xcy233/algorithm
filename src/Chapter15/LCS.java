@@ -15,7 +15,7 @@ public class LCS {
         lcsLength(X, Y, length, res);
         System.out.println("LCS length is: " + length[X.length][Y.length]);
         System.out.println("LCS is: ");
-        printLCS(X, Y, res, X.length, Y.length);
+        printLCS(X, Y, res, X.length, Y.length, new StringBuilder());
     }
 
     private static void lcsLength(char[] X, char[] Y, int[][] length, int[][] res) {
@@ -34,25 +34,34 @@ public class LCS {
                 } else if (length[i - 1][j] > length[i][j - 1]) {
                     length[i][j] = length[i - 1][j];
                     res[i][j] = -1;
-                } else {
+                } else if (length[i - 1][j] < length[i][j - 1]) {
                     length[i][j] = length[i][j - 1];
                     res[i][j] = 1;
+                } else {
+                    length[i][j] = length[i - 1][j];
+                    res[i][j] = 233;
                 }
             }
         }
     }
 
-    private static void printLCS(char[] X, char[] Y, int[][] res, int xPosition, int yPosition) {
+    private static void printLCS(char[] X, char[] Y, int[][] res, int xPosition, int yPosition, StringBuilder sb) {
         if (xPosition > 0 && yPosition > 0) {
             if (res[xPosition][yPosition] == 100) {
-                System.out.print(X[xPosition - 1]);
+                sb.append(X[xPosition - 1]);
                 //Note after print, we still need to print!
-                printLCS(X, Y, res, xPosition - 1, yPosition - 1);
+                printLCS(X, Y, res, xPosition - 1, yPosition - 1, sb);
             } else if (res[xPosition][yPosition] == 1) {
-                printLCS(X, Y, res, xPosition, yPosition - 1);
+                printLCS(X, Y, res, xPosition, yPosition - 1, sb);
+            } else if (res[xPosition][yPosition] == -1) {
+                printLCS(X, Y, res, xPosition - 1, yPosition, sb);
             } else {
-                printLCS(X, Y, res, xPosition - 1, yPosition);
+                //both side of substring can be LCS
+                printLCS(X, Y, res, xPosition, yPosition - 1, new StringBuilder(sb));
+                printLCS(X, Y, res, xPosition - 1, yPosition, new StringBuilder(sb));
             }
+        } else {
+            System.out.println(sb.reverse().toString());
         }
     }
 
