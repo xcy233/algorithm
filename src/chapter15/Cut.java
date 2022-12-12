@@ -1,4 +1,4 @@
-package Chapter15;
+package chapter15;
 
 public class Cut {
 
