@@ -15,16 +15,22 @@ public class QuickSort {
 
     private static void quickSort(int[] a, int l, int r) {
         if (l < r) {
-            int pivot = l;
-            for (int i = l + 1; i <= r; i++) {
-                if (a[i] < a[l]) {
-                    // pivot is always the value < a[l]
-                    Util.swap(a, i, ++pivot);
-                }
-            }
-            Util.swap(a, l, pivot);
-            quickSort(a, l, pivot - 1);
-            quickSort(a, pivot + 1, r);
+            int p = partition(a, l, r);
+            quickSort(a, l, p - 1);
+            quickSort(a, p + 1, r);
         }
+    }
+
+    private static int partition(int[] a, int l, int r) {
+        int pivot = a[l];
+        int p = l;
+        for (int i = l + 1; i <= r; i++) {
+            if (a[i] < pivot) {
+                p++;
+                Util.swap(a, p, i);
+            }
+        }
+        Util.swap(a, l, p);
+        return p;
     }
 }
