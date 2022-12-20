@@ -20,11 +20,12 @@ public class HeapSort {
     private static void maxHeapify(int[] a, int position, int heapLength) {
         int maxIdx = position;
         // first, find the largest in three nodes
-        if (2 * position < heapLength && a[position] < a[2 * position]) {
-            maxIdx = 2 * position;
-        }
-        if (2 * position + 1 < heapLength && a[maxIdx] < a[2 * position + 1]) {
+        // NOTE children are 2n + 1 and 2n + 2
+        if (2 * position + 1 < heapLength && a[position] < a[2 * position + 1]) {
             maxIdx = 2 * position + 1;
+        }
+        if (2 * position + 2 < heapLength && a[maxIdx] < a[2 * position + 2]) {
+            maxIdx = 2 * position + 2;
         }
         if (maxIdx != position) {
             // move largest node to root

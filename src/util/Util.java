@@ -8,6 +8,12 @@ public class Util {
         arr[j] = temp;
     }
 
+    public static <T> void swap(T[] arr, int i, int j) {
+        T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
     public static String array2Str(int[] arr, int i, int j) {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
